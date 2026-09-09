@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campus Canteen</title>
+  <style>
+    body{font-family:system-ui,sans-serif;max-width:640px;margin:2rem auto;padding:0 1rem}
+    table{width:100%;border-collapse:collapse}
+    td,th{padding:.5rem;border-bottom:1px solid #ddd;text-align:left}
+    input{padding:.4rem;margin:.2rem 0}
+    button{padding:.5rem 1rem;cursor:pointer}
+    .flash{background:#fff3cd;padding:.6rem;border-radius:6px;margin-bottom:1rem}
+    .badge{padding:2px 8px;border-radius:10px;background:#eee}
+    .READY{background:#d4edda}
+  </style>
+</head>
+<body>
+  <h1><a href="/" style="text-decoration:none">Campus Canteen</a></h1>
+  {% for m in get_flashed_messages() %}<div class="flash">{{ m }}</div>{% endfor %}
+  {% block content %}{% endblock %}
+</body>
+</html>

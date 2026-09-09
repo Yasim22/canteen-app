@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Order #{{ order.id }} <span class="badge {{ order.status }}">{{ order.status }}</span></h2>
+
+{% if order.status == "READY" %}
+<div class="flash" style="background:#d4edda">
+  <b>Your order is ready for pickup!</b>
+  Please collect it at the canteen counter and pay GHS {{ "%.2f"|format(order.total) }}.
+</div>
+{% elif order.status == "PENDING" %}
+<div class="flash">
+  Your order is being prepared. We will text you when it is ready for pickup.
+</div>
+{% else %}
+<div class="flash">This order has been collected. Thank you!</div>
+{% endif %}
+
+<p>Name: {{ order.customer_name }}</p>
+<table>
+  {% for i in order.items %}
+  <tr>
+    <td>{{ i.menu_item.name }} x {{ i.qty }}</td>
+    <td>GHS {{ "%.2f"|format(i.qty * i.unit_price) }}</td>
+  </tr>
+  {% endfor %}
+  <tr><th>Total</th><th>GHS {{ "%.2f"|format(order.total) }}</th></tr>
+</table>
+
+{% if order.status != "COLLECTED" %}
+<p>Pay at pickup. This page refreshes by itself every 15 seconds.</p>
+<script>setTimeout(function () { location.reload(); }, 15000);</script>
+{% endif %}
+{% endblock %}

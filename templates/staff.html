@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Active orders</h2>
+{% for o in orders %}
+<div style="border:1px solid #ddd;padding:.8rem;margin-bottom:.8rem;border-radius:8px">
+  <b>#{{ o.id }}</b> {{ o.customer_name }} ({{ o.phone }})
+  <span class="badge {{ o.status }}">{{ o.status }}</span>
+  <ul>{% for i in o.items %}<li>{{ i.menu_item.name }} x {{ i.qty }}</li>{% endfor %}</ul>
+  <b>GHS {{ "%.2f"|format(o.total) }}</b>
+  {% if o.status == "PENDING" %}
+    <form method="post" action="/staff/order/{{ o.id }}/ready" style="display:inline">
+      <button>Mark READY + SMS</button>
+    </form>
+  {% else %}
+    <form method="post" action="/staff/order/{{ o.id }}/collected" style="display:inline">
+      <button>Mark collected</button>
+    </form>
+  {% endif %}
+</div>
+{% else %}
+<p>No active orders.</p>
+{% endfor %}
+{% endblock %}

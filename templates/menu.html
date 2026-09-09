@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post" action="/order">
+  <table>
+    <tr><th>Item</th><th>Price (GHS)</th><th>Qty</th></tr>
+    {% for i in items %}
+    <tr>
+      <td>{{ i.name }}</td>
+      <td>{{ "%.2f"|format(i.price) }}</td>
+      <td><input type="number" name="qty_{{ i.id }}" min="0" value="0" style="width:60px"></td>
+    </tr>
+    {% endfor %}
+  </table>
+  <p>
+    <input name="customer_name" placeholder="Your name" required><br>
+    <input name="phone" placeholder="Phone e.g. 0244123456" required>
+  </p>
+  <button type="submit">Place order</button>
+</form>
+<p><a href="/staff">Staff login</a></p>
+{% endblock %}
